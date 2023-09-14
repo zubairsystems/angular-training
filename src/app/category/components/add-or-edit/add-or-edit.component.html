@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Add Category</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="category-form" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name">
+      <mat-error *ngIf="categoryForm.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
