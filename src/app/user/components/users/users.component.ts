@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { AddOrEditComponent } from '../add-or-edit/add-or-edit.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { ViewComponent } from 'src/app/user/components/view/view.component';
 
 @Component({
   selector: 'app-users',
@@ -15,10 +16,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UsersComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  users$!: Observable<User[]>
+  users: User[] = [];
+  private subcription!: Subscription;
 
-  displayedColumns: string[] = ['id', 'name',  'email', 'action'];
-  dataSource = new MatTableDataSource<User>(ELEMENT_DATA);
+  displayedColumns: string[] = ['id', 'avatar', 'name', 'email', 'role', 'date', 'action'];
+  dataSource = new MatTableDataSource<User>(this.users);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -29,21 +31,41 @@ export class UsersComponent implements OnInit, OnDestroy, AfterViewInit {
   ){}
 
   ngOnInit(): void {
+    this.getAllUsers();
+  }
 
+  getAllUsers(){
+    this.subcription = this._userService.getAllUsers().subscribe({
+      next: (res) => {
+        this.users = res;
+        this.dataSource.data = this.users;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 
   openModal(mode: string, user: User | null = null){
-    this.dialog.open(AddOrEditComponent, {
+    const dialogRef = this.dialog.open(AddOrEditComponent, {
       data: {
         mode,
         user
       },
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result){
+        this.getAllUsers();
+      }
+    })
   }
-  openDeleteModal(user: User){
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+
+  viewUser(user: User){
+    this.dialog.open(ViewComponent,{
+      data: {
+        user
+      }
     });
   }
 
@@ -52,17 +74,7 @@ export class UsersComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    // this.unsubscribe.next('');
-    // this.unsubscribe.complete();
+    this.subcription.unsubscribe();
   }
 
 }
-
-const ELEMENT_DATA: User[] = [
-  {id: 1, name: 'user 1', email:'fsd', avatar: ''},
-  {id: 2, name: 'user 2', email:'fsd', avatar: ''},
-  {id: 3, name: 'user 3', email:'fsd', avatar: ''},
-  {id: 4, name: 'user 4', email:'fsd', avatar: ''},
-  {id: 5, name: 'user 5', email:'fsd', avatar: ''},
-  {id: 6, name: 'user 6', email:'fsd', avatar: ''},
-];

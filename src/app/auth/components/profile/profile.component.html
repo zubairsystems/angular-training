@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="content" *ngIf="profile">
+    <img  [src]="profile.avatar" alt="Profile Image">
+    <div>
+      <h1>{{profile.name}}</h1>
+      <h2>{{profile.email}}</h2>
+      <p>{{profile.role}}</p>
+      <p>{{profile.creationAt | date}}</p>
+    </div>
+  </div>
+</div>

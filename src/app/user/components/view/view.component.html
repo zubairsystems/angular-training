@@ -1,0 +1,12 @@
+<div class="container">
+  <mat-icon class="close" [mat-dialog-close]>close</mat-icon>
+  <div class="content">
+    <img [src]="data.user.avatar" alt="">
+    <div>
+      <h1>{{data.user.name}}</h1>
+      <h2>{{data.user.email}}</h2>
+      <p>{{data.user.role}}</p>
+      <p>{{data.user.creationAt | date}}</p>
+    </div>
+  </div>
+</div>

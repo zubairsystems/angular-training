@@ -14,7 +14,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [
     ToolbarComponent,
@@ -37,7 +37,10 @@ import { MatSelectModule } from '@angular/material/select';
     
     MatPaginatorModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    
     
   ],
   exports: [
@@ -55,7 +58,9 @@ import { MatSelectModule } from '@angular/material/select';
     
     MatPaginatorModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule
   ]
 })
 export class SharedModule { }

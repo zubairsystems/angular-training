@@ -13,6 +13,10 @@ export class AppComponent {
     private _authService: AuthService,
   ){}
 
+  get isAuthenticated(){
+    return this._authService.isAuthenticated();
+  }
+
   logout(){
     this._authService.logout();
   }

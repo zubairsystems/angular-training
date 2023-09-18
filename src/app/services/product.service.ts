@@ -15,4 +15,14 @@ export class ProductService {
   getAllProducts(){
     return this.http.get<Product[]>(`${environment.apiUrl}/products`);
   }
+
+  addProduct(data: Product){
+    return this.http.post<Product>(`${environment.apiUrl}/products`, data);
+  }
+
+  editProduct(id: number, data: Product){
+    console.log(data);
+    return this.http.put<Product>(`${environment.apiUrl}/products/${id}`, data);
+  }
+
 }

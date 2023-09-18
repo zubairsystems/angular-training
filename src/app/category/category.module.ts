@@ -5,12 +5,14 @@ import { CategoryRoutingModule } from './category-routing.module';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { AddOrEditComponent } from './components/add-or-edit/add-or-edit.component';
 import { SharedModule } from '../shared/shared.module';
+import { ViewComponent } from './components/view/view.component';
 
 
 @NgModule({
   declarations: [
     CategoriesComponent,
-    AddOrEditComponent
+    AddOrEditComponent,
+    ViewComponent
   ],
   imports: [
     CommonModule,

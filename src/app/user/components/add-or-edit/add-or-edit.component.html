@@ -1,30 +1,46 @@
-<h2 mat-dialog-title>Add User</h2>
+<h2 mat-dialog-title>{{data.user ? 'Edit':'Add'}} User</h2>
 <mat-dialog-content class="mat-typography">
-  <form class="user-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <form class="user-form" [formGroup]="userForm">
     <mat-form-field class="full-width">
       <mat-label>Name</mat-label>
       <input type="text" matInput formControlName="name">
-      <mat-error *ngIf="userForm.hasError('required')">
+      <mat-error *ngIf="(f['name'].touched || isSubmitted)  && f['name']?.errors?.['required']">
         Name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>Email</mat-label>
       <input type="email" matInput formControlName="email">
-      <mat-error *ngIf="userForm.hasError('required')">
+      <mat-error *ngIf="(f['email'].touched || isSubmitted)  && f['email']?.errors?.['required']">
         Email is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="(f['email'].touched || isSubmitted)  && f['email']?.errors?.['email']">
+        Email is <strong>invalid</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>Password</mat-label>
       <input type="password" matInput formControlName="password">
-      <mat-error *ngIf="userForm.hasError('required')">
+      <mat-error *ngIf="(f['password'].touched || isSubmitted)  && f['password']?.errors?.['required']">
         Password is <strong>required</strong>
       </mat-error>
     </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Select</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="admin">Admin</mat-option>
+        <mat-option value="customer">Customer</mat-option>
+      </mat-select>
+      <mat-error *ngIf="(f['role'].touched || isSubmitted)  && f['role']?.errors?.['required']">
+        Role is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button> &nbsp; {{filename}}
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept="image/*"> 
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+  <button mat-button (click)="onSubmit()" *ngIf="!isSubmitted" [disabled]="userForm.invalid">{{data.user ? 'Update':  'Save'}} </button>
+  <mat-spinner [diameter]="24" *ngIf="isSubmitted"></mat-spinner>
 </mat-dialog-actions>

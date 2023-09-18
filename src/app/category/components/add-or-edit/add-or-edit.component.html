@@ -1,16 +1,19 @@
-<h2 mat-dialog-title>Add Category</h2>
+<h2 mat-dialog-title>{{data.category ? 'Edit':'Add'}} Category</h2>
 <mat-dialog-content class="mat-typography">
-  <form class="category-form" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <form class="category-form" [formGroup]="categoryForm">
     <mat-form-field class="full-width">
       <mat-label>Name</mat-label>
       <input type="text" matInput formControlName="name">
-      <mat-error *ngIf="categoryForm.hasError('required')">
+      <mat-error *ngIf="(f['name'].touched || isSubmitted)  && f['name']?.errors?.['required']">
         Name is <strong>required</strong>
       </mat-error>
-    </mat-form-field>
+    </mat-form-field> 
+    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button> &nbsp; {{filename}}
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept="image/*"> 
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+  <button mat-button (click)="onSubmit()" *ngIf="!isSubmitted" [disabled]="categoryForm.invalid">{{data.category ? 'Update':  'Save'}} </button>
+  <mat-spinner [diameter]="24" *ngIf="isSubmitted"></mat-spinner>
 </mat-dialog-actions>

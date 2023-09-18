@@ -1,11 +1,18 @@
-<app-toolbar></app-toolbar>
+<p >
+    <mat-toolbar color="primary">
+      <span>Angular Training</span>
+      <span class="example-spacer"></span>
+      <a (click)="logout()" *ngIf="isAuthenticated">Log out</a>
+    </mat-toolbar>
+</p>
 <mat-sidenav-container class="example-container">
-    <mat-sidenav opened mode="side" #sidenav>
+    <mat-sidenav opened mode="side" #sidenav *ngIf="isAuthenticated">
         <nav>
             <a routerLink="">Dashboard</a>
             <a routerLink="/products">Products</a>
             <a routerLink="/categories">Categories</a>
             <a routerLink="/users">Users</a>
+            <a routerLink="/auth/profile">Profile</a>
             <a (click)="logout()">Log out</a>
         </nav>
     </mat-sidenav>

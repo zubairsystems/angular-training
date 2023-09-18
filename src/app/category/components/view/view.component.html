@@ -1,0 +1,10 @@
+<div class="container">
+  <mat-icon class="close" [mat-dialog-close]>close</mat-icon>
+  <div class="content">
+    <img [src]="data.category.image" alt="">
+    <div>
+      <h1>{{data.category.name}}</h1>
+      <p>{{data.category.creationAt | date}}</p>
+    </div>
+  </div>
+</div>

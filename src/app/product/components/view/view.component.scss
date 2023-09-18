@@ -1,0 +1,27 @@
+.container{
+  width: 700px;
+  padding: 10px;
+
+  .close{
+    float: right;
+    cursor: pointer;
+  }
+
+  .content{
+    display: flex;
+    flex-direction: column;
+
+    .images {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      img {
+        width: 100px;
+        border-radius: 5px;
+      }
+    }
+    
+  }
+
+}

@@ -1,0 +1,28 @@
+.container{
+  width: 500px;
+  padding: 10px;
+
+  .close{
+    float: right;
+    cursor: pointer;
+  }
+
+  .content{
+    display: flex;
+    gap: 8px;
+
+    img {
+      width: 100px;
+      height: 100px;
+    }
+
+    h1, h2 {
+      margin: 0;
+    }
+
+    p{
+      margin: 0;
+    }
+  }
+
+}

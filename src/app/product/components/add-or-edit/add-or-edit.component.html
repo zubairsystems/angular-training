@@ -1,37 +1,42 @@
-<h2 mat-dialog-title>Add Product</h2>
+<h2 mat-dialog-title>{{data.product ? 'Edit':'Add'}} Product</h2>
 <mat-dialog-content class="mat-typography">
-  <form class="product-form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <form class="product-form" [formGroup]="productForm">
     <mat-form-field class="full-width">
       <mat-label>Title</mat-label>
       <input type="text" matInput formControlName="title">
-      <mat-error *ngIf="productForm.hasError('required')">
+      <mat-error *ngIf="(f['title'].touched || isSubmitted)  && f['title']?.errors?.['required']">
         Title is <strong>required</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Price</mat-label>
         <input type="number" matInput formControlName="price">
-        <mat-error *ngIf="productForm.hasError('required')">
+        <mat-error *ngIf="(f['price'].touched || isSubmitted)  && f['price']?.errors?.['required']">
           Price is <strong>required</strong>
         </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <mat-label>Description</mat-label>
-      <textarea matInput></textarea>
-      <mat-error *ngIf="productForm.hasError('required')">
+      <textarea matInput formControlName="description"></textarea>
+      <mat-error *ngIf="(f['description'].touched || isSubmitted)  && f['description']?.errors?.['required']">
         Description is <strong>required</strong>
       </mat-error>
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <mat-label>Select</mat-label>
-    <mat-select>
-      <mat-option value="one">First option</mat-option>
-      <mat-option value="two">Second option</mat-option>
-    </mat-select>
-  </mat-form-field>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Select</mat-label>
+      <mat-select formControlName="categoryId">
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="(f['categoryId'].touched || isSubmitted)  && f['categoryId']?.errors?.['required']">
+        Category is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button> &nbsp; {{filename}}
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept="image/*"> 
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+  <button mat-button (click)="onSubmit()" *ngIf="!isSubmitted" [disabled]="productForm.invalid">{{data.product ? 'Update':  'Save'}} </button>
+  <mat-spinner [diameter]="24" *ngIf="isSubmitted"></mat-spinner>
 </mat-dialog-actions>

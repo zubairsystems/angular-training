@@ -20,3 +20,14 @@
         background-color: #3f51b5;
     }
 }
+
+mat-toolbar{
+
+    .example-spacer {
+        flex: 1 1 auto;
+    }
+    a{
+        cursor: pointer;
+    }
+}
+

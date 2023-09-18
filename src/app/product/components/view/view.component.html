@@ -1,0 +1,12 @@
+<div class="container">
+  <mat-icon class="close" [mat-dialog-close]>close</mat-icon>
+  <div class="content">
+    <h1>{{data.product.title}}</h1>
+    <h2>{{data.product.price | currency}}</h2>
+    <p>{{data.product.category.name}}</p>
+    <p>{{data.product.description}}</p>
+    <div class="images">
+      <img *ngFor="let image of data.product.images;" [src]="image" alt="">
+    </div>
+  </div>
+</div>

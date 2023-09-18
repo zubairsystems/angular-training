@@ -1,8 +1,12 @@
 .category-form {
-  min-width: 150px;
+  min-width: 500px;
   max-width: 500px;
 }
 
 .full-width {
   width: 100%;
+}
+
+mat-spinner{
+  margin: 0 20px;
 }
